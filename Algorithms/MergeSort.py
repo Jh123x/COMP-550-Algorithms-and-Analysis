@@ -10,7 +10,7 @@ def merge_sort(array: List[int], start: int, end: int) -> None:
         merge(array, start, mid, end)
 
 def merge(array: List[int], start: int, mid: int, end: int) -> None:
-    """Merging subroutine"""
+    """Merging subroutine"""    
     left = array[start:mid + 1]
     right = array[mid + 1:end + 1]
     left.append(float("inf"))
