@@ -22,7 +22,7 @@ def find_max_crossing_subarray(arr: list, low: int, mid: int, high: int) -> tupl
     return (max_left, max_right, left_sum + right_sum)
 
 
-def find_max_subarray(arr: list, low: int, high: int) -> tuple:
+def find_max_subarray(arr: list, low: int, high: int) -> tuple[int, int, list]:
     """Find the maximum sum of a subarray"""
     if low >= high:
         return (low, high, arr[low])
@@ -35,7 +35,7 @@ def find_max_subarray(arr: list, low: int, high: int) -> tuple:
     return max(left, right, cross, key=lambda x: x[2])
 
 if __name__ == '__main__':
-    arr = [1, -2, 3, -4, 5, -6, 7, -8, 9, - 10]
+    arr = [-1,1,2,3,4,1,1,1,2]
     result = find_max_subarray(arr, 0, len(arr) - 1)
     print(result)
     
