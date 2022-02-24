@@ -8,6 +8,7 @@ def merge_sort(array: List[int], start: int, end: int) -> None:
         merge_sort(array, start, mid)
         merge_sort(array, mid + 1, end)
         merge(array, start, mid, end)
+    return array
 
 def merge(array: List[int], start: int, mid: int, end: int) -> None:
     """Merging subroutine"""    

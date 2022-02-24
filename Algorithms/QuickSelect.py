@@ -1,9 +1,10 @@
 from random import randint
+import time
+from MergeSort import merge_sort
+
 
 def get_median(arr: list[int]) -> int:
     """Get the median of a list"""
-    assert len(arr) > 0 and len(arr) <= 5, arr
-
     if len(arr) == 1:
         return arr[0]
 
@@ -15,11 +16,16 @@ def get_median(arr: list[int]) -> int:
 
     return sorted_arr[size // 2]
 
-def get_pivot(arr:list, lower:int, higher:int) -> int:
+
+def get_pivot(arr: list, lower: int, higher: int) -> int:
     """Getting a good pivot"""
     acc = []
     for i in range(lower, higher + 1, 5):
         end = min(higher + 1, i + 5)
+
+        # Check that the each partition is < 5
+        assert end - i <= 5, (i, end, higher, lower)
+
         a = arr[i:end]
         if len(a) == 0:
             continue
@@ -30,13 +36,18 @@ def get_pivot(arr:list, lower:int, higher:int) -> int:
         me = get_median(grp)
         medians.append(me)
 
+    if len(medians) > 5:
+        return get_pivot(medians, 0, len(medians) - 1)
+
     return get_median(medians)
 
-def swap(arr:list[int], index1:int, index2:int) -> None:
+
+def swap(arr: list[int], index1: int, index2: int) -> None:
     assert index1 < len(arr) and index2 < len(arr), (index1, index2, len(arr))
     arr[index1], arr[index2] = arr[index2], arr[index1]
 
-def quick_select(arr: list, lower:int, higher:int, target:int) -> int:
+
+def quick_select(arr: list, lower: int, higher: int, target: int) -> int:
     """O(n) Order selection algorithm"""
 
     # Base Case
@@ -61,7 +72,7 @@ def quick_select(arr: list, lower:int, higher:int, target:int) -> int:
             right_index -= 1
         else:
             swap(arr, lower, left_index)
-    
+
     swap(arr, lower, right_index)
 
     # Recursion
@@ -75,9 +86,26 @@ def quick_select(arr: list, lower:int, higher:int, target:int) -> int:
 
 
 if __name__ == '__main__':
-    size = 9
-    arr = [randint(0, 100) for _ in range(size)]
-    for target in range(size):
-        assert quick_select(arr, 0, size - 1, target) == sorted(arr)[target-1], "Failed at {}".format(target)
-    
-    
+    for size in range(1, 500):
+        arr = [randint(0, 100) for _ in range(size)]
+
+        total_sort_time = 0
+        total_select_time = 0
+        for target in range(size):
+
+            array = arr.copy()
+
+            # Sort time
+            sort_start = time.time()
+            sorted_arr = merge_sort(array, 0, len(arr) - 1)
+            total_sort_time += time.time() - sort_start
+
+            # Select Time
+            start_time = time.time()
+            select_target = quick_select(arr, 0, size - 1, target)
+            total_select_time += time.time() - start_time
+
+            assert select_target == sorted_arr[target -1], "Failed at {}".format(target)
+
+        print(
+            f"Size: {size}, Sort Time: {total_sort_time / size}, Avg Select Time: {total_select_time / size}")
