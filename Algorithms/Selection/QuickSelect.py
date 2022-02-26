@@ -126,7 +126,7 @@ if __name__ == '__main__':
 
             array = arr.copy()
 
-            # Sort time
+            # Sort and select time
             sort_start = time.time()
             sorted_arr = merge_sort(array, 0, len(arr) - 1)
             total_sort_time += time.time() - sort_start
