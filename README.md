@@ -5,3 +5,4 @@
 2. Merge Sort
 3. Maximum Subarray
 4. Quick Select
+5. Huffman Encoding
