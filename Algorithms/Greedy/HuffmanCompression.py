@@ -1,14 +1,12 @@
 from math import log2
-from pyclbr import Function
 import time
 from typing import Optional
 from heapq import heapify, heappush, heappop
 
 
 class Node(object):
-
     def __init__(self, freq: int, value: Optional[str] = None, left: 'Node' = None, right: 'Node' = None) -> None:
-        """Get the frequency of the word"""
+        """Node object for representing the huffman tree"""
 
         # Check if it is a valid node
         if None in (left, right) and value is None:
@@ -135,7 +133,8 @@ def conventional_compression_dict(text: str) -> dict[str, str]:
 
         # Padding
         if len(encoded_val) < bits_required:
-            encoded_val = "0" * (bits_required - len(encoded_val)) + encoded_val
+            encoded_val = "0" * \
+                (bits_required - len(encoded_val)) + encoded_val
 
         encode_d[letter] = encoded_val
 
@@ -143,6 +142,7 @@ def conventional_compression_dict(text: str) -> dict[str, str]:
 
 
 def compress(compress_dict: dict[str, str], text: str) -> str:
+    """Compression routine"""
     # Compression
     acc = []
     for letter in text:
@@ -152,6 +152,7 @@ def compress(compress_dict: dict[str, str], text: str) -> str:
 
 
 def decompress(compress_dict: dict[str, str], encoded_text: str) -> str:
+    """Decompression routine"""
     # Invert dictionary
     decompress_dict = dict(map(lambda x: x[::-1], compress_dict.items()))
 
@@ -173,7 +174,6 @@ def decompress(compress_dict: dict[str, str], encoded_text: str) -> str:
         length = 1
 
     return ''.join(buffer)
-        
 
 
 if __name__ == "__main__":
@@ -190,8 +190,13 @@ if __name__ == "__main__":
     conven = compress(conventional_dict, text)
     conven_time = time.time_ns() - start_time
 
-    print(f"Length of huffman compression result = {len(huffman)} Time taken: {huffman_time}ns")
-    print(f"Length of conventional compression result = {len(conven)} Time taken: {conven_time}ns")
+    print(
+        f"Length of huffman compression result = {len(huffman)} Time taken: {huffman_time}ns")
+    print(
+        f"Length of conventional compression result = {len(conven)} Time taken: {conven_time}ns")
+    print(f"Bits saved: {len(conven) - len(huffman)}")
 
-    print(f"Huffman decompress to text string: {decompress(huffman_dict, huffman)}")
-    print(f"Conventional decompress to text string: {decompress(conventional_dict, conven)}")
+    print(
+        f"Huffman decompress to text string: {decompress(huffman_dict, huffman)}")
+    print(
+        f"Conventional decompress to text string: {decompress(conventional_dict, conven)}")

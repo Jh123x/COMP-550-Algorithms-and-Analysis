@@ -1,6 +1,37 @@
 from random import randint
 import time
-from MergeSort import merge_sort
+
+
+## Exerpt from merge sort ###################
+from typing import List
+
+
+def merge_sort(array: List[int], start: int, end: int) -> None:
+    """Merge sort algorithm"""
+    if start < end:
+        mid = (start + end) // 2
+        merge_sort(array, start, mid)
+        merge_sort(array, mid + 1, end)
+        merge(array, start, mid, end)
+    return array
+
+
+def merge(array: List[int], start: int, mid: int, end: int) -> None:
+    """Merging subroutine"""
+    left = array[start:mid + 1]
+    right = array[mid + 1:end + 1]
+    left.append(float("inf"))
+    right.append(float("inf"))
+    i = j = 0
+    for k in range(start, end + 1):
+        if left[i] <= right[j]:
+            array[k] = left[i]
+            i += 1
+        else:
+            array[k] = right[j]
+            j += 1
+
+#############################################
 
 
 def get_median(arr: list[int]) -> int:
@@ -105,7 +136,8 @@ if __name__ == '__main__':
             select_target = quick_select(arr, 0, size - 1, target)
             total_select_time += time.time() - start_time
 
-            assert select_target == sorted_arr[target -1], "Failed at {}".format(target)
+            assert select_target == sorted_arr[target -
+                                               1], "Failed at {}".format(target)
 
         print(
             f"Size: {size}, Sort Time: {total_sort_time / size}, Avg Select Time: {total_select_time / size}")
