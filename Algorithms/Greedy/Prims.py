@@ -16,14 +16,19 @@ visited = set('A')
 edges = []
 
 while len(visited) < len(graph):
+    # Pop the top
     weight, from_edge, to_edge = heapq.heappop(arr)
+
+    # Check if edge is visited
     if to_edge in visited:
         continue
+
+    # Add edge to tree
     visited.add(to_edge)
     edges.append((from_edge, to_edge, weight))
+
+    # Add Adjacent edges
     for new_to_edge, weight in graph[to_edge].items():
-        if new_to_edge in visited:
-            continue
         new_add = (weight, to_edge, new_to_edge)
         heapq.heappush(arr, new_add)
 
