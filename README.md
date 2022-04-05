@@ -10,3 +10,4 @@
 6. Find median of sorted array
 7. Prim's Algorithm
 8. Kruskal's Algorithm
+9. UFDS with compression
