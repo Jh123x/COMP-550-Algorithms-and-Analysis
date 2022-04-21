@@ -1,5 +1,5 @@
 def insertion_sort(array: list) -> None:
-    """Insertion sort"""
+    """Insertion sort in place"""
 
     # Iterate through the array
     for i in range(1, len(array)):
