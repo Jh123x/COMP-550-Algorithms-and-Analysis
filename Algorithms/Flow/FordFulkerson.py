@@ -36,6 +36,9 @@ def find_min_flow_on_path(adj_l, path):
 
 def ford_fulkerson(adj_l: dict[str, dict[str, int]], source: str, sink: str) -> int:
     """Ford Fulkerson algorithm"""
+    if source == sink:
+        return float('inf')
+
     max_flow = 0
     residual_graph = {}
 
