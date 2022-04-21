@@ -74,6 +74,9 @@ def huffman_tree(text: str) -> Node:
 
     frequency = get_frequency(text)
 
+    if len(frequency) == 0:
+        return None
+
     # Min heap with key (freq, value)
     min_heap = list(
         map(
