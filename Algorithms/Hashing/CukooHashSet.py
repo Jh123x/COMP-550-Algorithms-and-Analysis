@@ -33,7 +33,7 @@ class CukooSet(object):
             return False
 
         isTable1 = True
-        for _ in range(self.array_size):
+        for _ in range(self.array_size * 2):
             if isTable1:
                 hash1 = self._get_hash1_of(item)
                 if self.t1[hash1] is None:
