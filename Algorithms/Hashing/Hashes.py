@@ -3,17 +3,17 @@ def joaat_hash(key: str) -> int:
     hash = 0
     for char in key:
         hash += ord(char)
-        hash += (hash << 10)
-        hash ^= (hash >> 6)
+        hash += (hash << 13)
+        hash ^= (hash >> 7)
     return hash
 
 
 def myShittyHash(key: str):
     """My shitty hash function"""
-    hash = 0
-    for char in key:
-        hash += ord(char)
-    return hash
+    start = 23
+    for i in range(len(key)):
+        start *= ord(key[i]) * 101
+    return start
 
 
 HASH_FAMILY = [
