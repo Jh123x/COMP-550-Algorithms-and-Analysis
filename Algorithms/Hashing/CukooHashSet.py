@@ -1,41 +1,21 @@
-from typing import Any, List
+from typing import List
 from random import choices
 
-
-def joaat_hash(key: str) -> int:
-    """Joaat hash function"""
-    hash = 0
-    for char in key:
-        hash += ord(char)
-        hash += (hash << 10)
-        hash ^= (hash >> 6)
-    return hash
-
-
-def myShittyHash(key: str):
-    """My shitty hash function"""
-    hash = 0
-    for char in key:
-        hash += ord(char)
-    return hash
+from Hashes import HASH_FAMILY
 
 
 class CukooSet(object):
-    HASH_FAMILY = [
-        hash,
-        joaat_hash,
-    ]
 
     def __init__(self, curr: List[str] = {}) -> None:
         """A Hash set based on Cukoo hashing
             :param curr: Must be a list of Strings
         """
-        self.t1 = [None] * 2
-        self.t2 = [None] * 2
-        self.hash1, self.hash2 = choices(self.HASH_FAMILY, k=2)
-        self.size = 0
         self.array_size = 2
-        self.__initialize(curr)
+        self.t1 = [None] * self.array_size
+        self.t2 = [None] * self.array_size
+        self.hash1, self.hash2 = choices(HASH_FAMILY, k=2)
+        self.size = 0
+        self.__initialize__(curr)
 
     def _get_hash1_of(self, key: str) -> int:
         if key is None:
@@ -47,9 +27,9 @@ class CukooSet(object):
             return None
         return self.hash2(key) % self.array_size
 
-    def insert(self, item: str):
+    def insert(self, item: str) -> bool:
         """Insert an item into the set"""
-        if item in self:
+        if self._contains(item):
             return False
 
         isTable1 = True
@@ -82,7 +62,8 @@ class CukooSet(object):
         self.array_size *= 2
         self.t1 = [None] * self.array_size
         self.t2 = [None] * self.array_size
-        self.__initialize(all_items)
+        self.size = 0
+        self.__initialize__(all_items)
 
     def __contains__(self, key: str):
         """Check if the key is in the set"""
@@ -112,11 +93,11 @@ class CukooSet(object):
 
         return False
 
-    def contains(self, key: str) -> bool:
+    def _contains(self, key: str) -> bool:
         """Find the element"""
         return key in self
 
-    def __initialize(self, curr: List[str]) -> None:
+    def __initialize__(self, curr: List[str]) -> None:
         """Initialize the set"""
         for item in curr:
             self.insert(item)
