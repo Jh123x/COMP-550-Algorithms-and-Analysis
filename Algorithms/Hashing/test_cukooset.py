@@ -13,6 +13,7 @@ def test_set_search_1_element():
     assert mySet.insert("1")
     assert mySet._contains("1")
 
+
 def test_set_add_many_and_search_many():
     """Add many items"""
     items = [str(i) for i in range(100)]
@@ -26,7 +27,8 @@ def test_set_add_many_and_search_many():
         assert mySet._contains(item)
         assert item in mySet
 
-    for item in items:
+    for index, item in enumerate(items):
         assert mySet.remove(item)
         assert not mySet._contains(item)
         assert item not in mySet
+        assert len(mySet) == len(items) - index - 1
