@@ -3,12 +3,14 @@ from .NamedVariable import NamedVariable
 
 class Constant(NamedVariable):
     NAME = "Constant"
-    ALLOWED_TYPES = (int, )
+    ALLOWED_TYPES = (int, float)
     CONVERSION_HANDLERS = {
         int: lambda self, other: Constant(self.value + other),
+        float: lambda self, other: Constant(self.value + other),
     }
     EQ_HANDLER = {
         int: lambda self, other: self.value == other,
+        float: lambda self, other: abs(self.value - other) < self.TOLERANCE,
     }
 
     def __init__(self, value: int) -> None:
@@ -20,13 +22,28 @@ class Constant(NamedVariable):
         """Negation of the Constant"""
         return Constant(-self.value)
 
+    def __lt__(self, other) -> 'Constant':
+        """Less than of constants"""
+        if type(other) not in self.ALLOWED_TYPES and type(other) != Constant:
+            raise TypeError("Can only compare constants to constants or integers")
+        if type(other) == Constant:
+            return self.value < other.value
+        return self.EQ_HANDLER[type(other)](self, other)
+
     def to_z3(self) -> int:
         """Convert to z3.Int"""
         return self.value
 
     def __truediv__(self, other: int) -> 'Constant':
         """Division of constants"""
+        result = self.value / other
+        if abs(result - int(result)) < self.TOLERANCE:
+            return Constant(int(result))
         return Constant(self.value / other)
+
+    def __mul__(self, other:int) -> 'Constant':
+        """Multiplication of constants"""
+        return Constant(self.value * other)
 
     def __add__(self, other) -> 'Constant':
         """Addition of constants"""

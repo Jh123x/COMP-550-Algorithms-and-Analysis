@@ -24,7 +24,14 @@ class Variable(NamedVariable):
 
     def __truediv__(self, other: int) -> 'Variable':
         """Divide the variable"""
-        return Variable(self.name, self.coeff / other)
+        result = self.coeff / other
+        if abs(result - int(result)) < self.TOLERANCE:
+            return Variable(self.name, int(result))
+        return Variable(self.name, result)
+
+    def __mul__(self, other:int) -> 'Variable':
+        """Multiply the variable"""
+        return Variable(self.name, self.coeff * other)
 
     def __add__(self, other: Any):
         """Addition of the Variable"""

@@ -3,7 +3,7 @@ from typing import Union, List
 
 from .Variable import Variable
 from .Constant import Constant
-from .NamedVariable import NamedVariable
+from .Equation import Equation
 
 
 Numbers = Union[Variable, Constant]
@@ -47,4 +47,26 @@ class ObjFunction:
 
     def get_max_coeff(self) -> Variable:
         """Get the maximum coefficient for the current values"""
-        return max(self.variables, key=lambda x: x.coeff if isinstance(x, Variable) else -float('inf'))
+        if len(self.varnames) == 0:
+            acc = Constant(0)
+            for var in self.variables:
+                acc += var
+            return acc
+        return max(filter(lambda x: isinstance(x, Variable), self.variables), key=lambda x: x.coeff)
+
+    def substitute(self, other: Equation) -> 'ObjFunction':
+        """Substitute the variables in the objective function
+            eqn: Equation to substitute (Must have 1 term on the rhs)
+        """
+        if len(other.rhs) != 1:
+            raise Exception("Equation must have 1 term on the rhs")
+
+        s_term = other.rhs[0]
+        
+        new_vars = []
+        for var in self.variables:
+            if var.name == s_term.name and var.coeff != 0:
+                new_vars += list(map(lambda x: x*var.coeff / s_term.coeff, other.lhs))
+                continue
+            new_vars.append(var)
+        return ObjFunction(new_vars).simplify()
