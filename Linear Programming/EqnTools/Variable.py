@@ -1,3 +1,5 @@
+import z3
+
 from typing import Any
 from .NamedVariable import NamedVariable
 
@@ -13,9 +15,16 @@ class Variable(NamedVariable):
         super().__init__(name)
         self.coeff = coeff
 
+    def to_z3(self) -> z3.Real:
+        return z3.Real(self.name)
+
     def __neg__(self) -> 'Variable':
         """Negate the Variable"""
         return Variable(self.name, -self.coeff)
+
+    def __truediv__(self, other: int) -> 'Variable':
+        """Divide the variable"""
+        return Variable(self.name, self.coeff / other)
 
     def __add__(self, other: Any):
         """Addition of the Variable"""

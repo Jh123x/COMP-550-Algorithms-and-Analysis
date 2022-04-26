@@ -20,6 +20,14 @@ class Constant(NamedVariable):
         """Negation of the Constant"""
         return Constant(-self.value)
 
+    def to_z3(self) -> int:
+        """Convert to z3.Int"""
+        return self.value
+
+    def __truediv__(self, other: int) -> 'Constant':
+        """Division of constants"""
+        return Constant(self.value / other)
+
     def __add__(self, other) -> 'Constant':
         """Addition of constants"""
         if type(other) not in self.ALLOWED_TYPES and type(other) != Constant:

@@ -32,6 +32,28 @@ def test_simplify():
     rhs = [Constant(5), Constant(7), Variable('x')]
     eqn = Equation(lhs, rhs)
     result = eqn.simplify()
-    print(result, result.lhs, result.rhs)
     assert repr(result) == "y = 12"
     
+def test_make_subject():
+    lhs = [Variable("x"), Variable("y")]
+    rhs = [Constant(12)]
+    eqn = Equation(lhs, rhs)
+    r = eqn.make_subject('x')
+    assert repr(r) == "-y + 12.0 = x", r
+
+def test_make_subject_complex():
+    lhs = [Variable("x"), Variable("y", 3), Variable("z", 4)]
+    rhs = [Constant(12)]
+    eqn = Equation(lhs, rhs)
+    r = eqn.make_subject('x')
+    assert repr(r) == "-3.0y + -4.0z + 12.0 = x", r
+    r2 = eqn.make_subject('y')
+    assert repr(r2) == "-0.3333333333333333x + -1.3333333333333333z + 4.0 = y", r2
+
+
+def test_get_max():
+    lhs = [Variable("x"), Variable("y")]
+    rhs = [Constant(5), Constant(7), Constant(12)]
+    eqn = Equation(lhs, rhs)
+    assert eqn.get_max_value_of_var('x') == Constant(24)
+    assert eqn.get_max_value_of_var('y') == Constant(24)
