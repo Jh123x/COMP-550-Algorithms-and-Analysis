@@ -1,10 +1,12 @@
+from typing import List
+
 # Define directions
 DIAGONOAL = (-1, -1)
 UP = (0, -1)
 LEFT = (-1, 0)
 
 
-def trace_table(backtrack_table, seq1, seq2):
+def trace_table(backtrack_table, seq1, seq2) -> List[str]:
     """Trace back the backtrack table to find the longest common subsequence"""
     i, j = len(seq1)-1, len(seq2)-1
     lcs = []
