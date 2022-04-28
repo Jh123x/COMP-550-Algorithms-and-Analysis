@@ -11,6 +11,7 @@ def rod_cutting_max_pieces(pieces: List[int], length: int) -> int:
             if i == piece_size:
                 dp[i] = max(dp[i], 1)
                 continue
-            dp[i] = max(dp[i], dp[i-piece_size] + dp[piece_size])
-        
+            if i > piece_size:
+                dp[i] = max(dp[i], dp[i-piece_size] + dp[piece_size])
+
     return dp[length], dp
