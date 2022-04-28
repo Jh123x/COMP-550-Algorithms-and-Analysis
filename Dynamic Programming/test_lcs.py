@@ -24,11 +24,13 @@ def test_case_1():
     assert result == 5
     assert seq == ["A", "T", "A", "C", "T"]
 
+
 def test_case_2():
     a1 = "ABCDEFG"
     result, seq = longest_common_subsequence(a1, a1)
     assert result == len(a1)
     assert seq == list(a1)
+
 
 def test_case_3():
     a1 = "ABCDEFG"
@@ -36,4 +38,3 @@ def test_case_3():
     result, seq = longest_common_subsequence(a1, a2)
     assert result == len(a2)
     assert seq == list(a2)
-
