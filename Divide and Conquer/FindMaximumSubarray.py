@@ -34,8 +34,8 @@ def find_max_subarray(arr: list, low: int, high: int) -> tuple[int, int, list]:
 
     return max(left, right, cross, key=lambda x: x[2])
 
+
 if __name__ == '__main__':
-    arr = [-1,1,2,3,4,1,1,1,2]
+    arr = [-1, 1, 2, 3, 4, 1, 1, 1, 2]
     result = find_max_subarray(arr, 0, len(arr) - 1)
     print(result)
-    

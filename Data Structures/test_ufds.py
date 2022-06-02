@@ -1,5 +1,6 @@
 from UnionFindDisjointSet import UFDS
 
+
 def test_ufds_for_items():
     ufds = UFDS(['a', 'b', 'c', 'd'])
     ufds.union('a', 'b')

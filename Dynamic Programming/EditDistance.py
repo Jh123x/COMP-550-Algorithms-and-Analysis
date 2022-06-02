@@ -1,8 +1,3 @@
-
-
-from click import edit
-
-
 def edit_distance(word1: str, word2: str) -> int:
     """Check the edit distance between 2 words"""
     memo = [[0 for _ in range(len(word2) + 1)] for _ in range(len(word1) + 1)]

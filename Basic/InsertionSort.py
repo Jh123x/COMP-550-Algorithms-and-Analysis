@@ -6,8 +6,5 @@ def insertion_sort(array: list) -> None:
         curr = array[i]
         for j in range(i):
             if array[j] > curr:
-                array[j], curr = curr, array[j] # Swap
+                array[j], curr = curr, array[j]  # Swap
         array[i] = curr
-
-
-

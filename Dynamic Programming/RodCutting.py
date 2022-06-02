@@ -9,6 +9,7 @@ def rod_cutting(prices: List[int], length: int) -> int:
             dp[i] = max(dp[i], prices[j - 1] + dp[i - j])
     return dp[length], dp
 
+
 if __name__ == '__main__':
     prices = [1, 5, 8, 9, 10, 17, 17, 20]
     length = 5

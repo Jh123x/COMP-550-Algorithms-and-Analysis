@@ -38,7 +38,7 @@ def longest_common_subsequence(seq1, seq2):
             elif count_table[i-1][j] >= count_table[i][j-1]:
                 count_table[i][j] = count_table[i-1][j]
                 backtrack_table[i-1][j-1] = LEFT
-            
+
             # Otherwise up
             else:
                 count_table[i][j] = count_table[i][j-1]
